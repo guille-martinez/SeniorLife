@@ -2,18 +2,25 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native"; // Import navigation container
 import { createStackNavigator } from "@react-navigation/stack"; // Import stack navigator
 import HomeScreen from "./screens/HomeScreen";
-import LoginScreen from "./screens/LoginScreen"; // Import LoginScreen
-import SignupScreen from "./screens/SignupScreen"; // Import SignupScreen
+import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
+import PersonalDataScreen from "./screens/PersonalDataScreen"
+import MedicalRegisterScreen from "./screens/MedicalRegisterScreen"
+import PrivacyPolicyScreen from "./screens/PrivacyPolicyScreen"
+
 
 const Stack = createStackNavigator();
 
 export default function Index() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="SignUp" component={SignupScreen} />
+      <Stack.Navigator initialRouteName="Inicio">
+        <Stack.Screen name="Inicio" component={HomeScreen} />
+        <Stack.Screen name="Iniciar Sesión" component={LoginScreen} />
+        <Stack.Screen name="Registro" component={SignupScreen} />
+        <Stack.Screen name="Datos Personales" component={PersonalDataScreen} />
+        <Stack.Screen name="Registro Médico" component={MedicalRegisterScreen} />
+        <Stack.Screen name="Política de privacidad" component={PrivacyPolicyScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

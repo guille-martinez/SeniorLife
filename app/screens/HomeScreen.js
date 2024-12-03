@@ -4,15 +4,15 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Image source={{ uri: "https://via.placeholder.com/150" }} style={styles.logo} />
-      <Text style={styles.title}>Welcome to SeniorLife!</Text>
-      <Text style={styles.subtitle}>Empowering connections. Enhancing experiences.</Text>
+      <Image source={{ url: "https://via.placeholder.com/150" }} style={styles.logo} />
+      <Text style={styles.title}>Bienvenido a SeniorLife!</Text>
+      <Text style={styles.subtitle}>Aumentando conexiones. Reduciendo emergencias.</Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Login")}>
-          <Text style={styles.buttonText}>Log In</Text>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Iniciar Sesión")}>
+          <Text style={styles.buttonText}>INICIAR SESIÓN</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.signupButton]} onPress={() => navigation.navigate("SignUp")}>
-          <Text style={styles.buttonText}>Sign Up</Text>
+        <TouchableOpacity style={[styles.button, styles.signupButton]} onPress={() => navigation.navigate("Registro")}>
+          <Text style={styles.buttonText}>REGISTARSE</Text>
         </TouchableOpacity>
       </View>
     </View>
