@@ -23,7 +23,7 @@ export default function DashboardScreen() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.optionButton}
-          onPress={() => navigation.navigate("HealthMonitor")}
+          onPress={() => navigation.navigate("Monitor de Salud")}
         >
           <Text style={styles.optionText}>❤️ Monitor de Salud</Text>
         </TouchableOpacity>

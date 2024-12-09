@@ -31,13 +31,14 @@ export default function MedicalRegisterScreen({ navigation, route }) {
     }
 
     // If all validations pass
-    handleStepCompletion();
+    Alert.alert("¡Guardado!", "Los datos médicos se han guardado correctamente.");
+    handleStepCompletion("medicalRegistration");
     navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registro Médico</Text>
+      <Text style={styles.title}>Use los wearables para completar los siguientes campos:</Text>
       
       {/* Form Inputs */}
       <TextInput
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   title: {
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   button: {
-    backgroundColor: "#008CBA",
+    backgroundColor: "#4CAF50",
     padding: 15,
     borderRadius: 8,
     alignItems: "center",

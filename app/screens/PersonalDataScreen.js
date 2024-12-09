@@ -8,6 +8,7 @@ export default function PersonalDataScreen({ navigation, route }) {
   const [birthdate, setBirthdate] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSave = () => {
     // Form validation
@@ -30,13 +31,14 @@ export default function PersonalDataScreen({ navigation, route }) {
     }
 
     // If all validations pass
-    handleStepCompletion();
+    Alert.alert("¡Guardado!", "Los datos personales se han guardado correctamente.");
+    handleStepCompletion("personalData"); // Llamamos aquí
     navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Datos Personales</Text>
+      <Text style={styles.title}>Rellene los siguientes campos:</Text>
       
       {/* Form Inputs */}
       <TextInput
@@ -65,6 +67,20 @@ export default function PersonalDataScreen({ navigation, route }) {
         value={phone}
         onChangeText={setPhone}
       />
+      <TextInput
+        style={styles.input}
+        placeholder="Contraseña"
+        keyboardType="phone-pad"
+        value={password}
+        onChangeText={setPassword}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Repetir Contraseña"
+        keyboardType="phone-pad"
+        value={password}
+        onChangeText={setPassword}
+      />
       
       {/* Submit Button */}
       <TouchableOpacity style={styles.button} onPress={handleSave}>
@@ -82,7 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   title: {
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
