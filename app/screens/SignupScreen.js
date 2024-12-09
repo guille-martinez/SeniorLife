@@ -19,8 +19,7 @@ export default function SignUpScreen({ navigation }) {
 
   const handleContinue = () => {
     if (allStepsCompleted) {
-      Alert.alert("¡Éxito!", "Todos los pasos completados. Continuando...");
-      navigation.navigate("NextScreen"); // Replace with the actual next screen name
+      navigation.navigate("Principal"); // Replace with the actual next screen name
     } else {
       Alert.alert(
         "Pasos Incompletos",
