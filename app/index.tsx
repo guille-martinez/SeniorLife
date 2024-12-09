@@ -9,6 +9,8 @@ import MedicalRegisterScreen from "./screens/MedicalRegisterScreen"
 import PrivacyPolicyScreen from "./screens/PrivacyPolicyScreen"
 import DashboardScreen from "./screens/DashboardScreen"
 import VideoCallScreen from "./screens/VideoCallScreen"
+import CallSimulationScreen from "./screens/CallSimulationScreen"
+import MedicalTrackingScreen from "./screens/MedicalTrackingScreen"
 
 
 const Stack = createStackNavigator();
@@ -23,10 +25,32 @@ export default function Index() {
         <Stack.Screen name="Datos Personales" component={PersonalDataScreen} />
         <Stack.Screen name="Registro Médico" component={MedicalRegisterScreen} />
         <Stack.Screen name="Política de privacidad" component={PrivacyPolicyScreen} />
-        <Stack.Screen name='Principal' component={DashboardScreen} />
+        <Stack.Screen
+          name="Principal"
+          component={DashboardScreen}
+          options={{
+            headerLeft: () => null, // Elimina el botón de retroceso
+            gestureEnabled: false, // Desactiva la función de deslizar hacia atrás
+          }}
+        />
         <Stack.Screen name='Video Llamada' component={VideoCallScreen} />
+        <Stack.Screen 
+          name='Llamada' 
+          component={CallSimulationScreen}
+          options={{
+            headerLeft: () => null,
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen 
+          name='Monitor de Salud'
+          component={MedicalTrackingScreen}
+          options={{
+            headerLeft: () => null,
+            gestureEnabled: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-

@@ -37,10 +37,9 @@ export default function SignUpScreen({ navigation }) {
           completedSteps.personalData ? styles.completedBox : null,
         ]}
         onPress={() => {
-          navigation.navigate("Datos Personales",{
-            handleStepCompletion: () => handleStepCompletion("personalData"),
+          navigation.navigate("Datos Personales", {
+            handleStepCompletion: (step) => handleStepCompletion(step),
           });
-          handleStepCompletion("personalData");
         }}
       >
         <Text style={styles.boxText}>1. Datos Personales</Text>
@@ -57,9 +56,8 @@ export default function SignUpScreen({ navigation }) {
         ]}
         onPress={() => {
           navigation.navigate("Registro Médico", {
-            handleStepCompletion: () => handleStepCompletion("medicalRegistration"),
+            handleStepCompletion: (step) => handleStepCompletion(step),
           });
-          handleStepCompletion("medicalRegistration");
         }}
       >
         <Text style={styles.boxText}>2. Registro Médico</Text>
@@ -76,9 +74,8 @@ export default function SignUpScreen({ navigation }) {
         ]}
         onPress={() => {
           navigation.navigate("Política de privacidad", {
-            handleStepCompletion: () => handleStepCompletion("privacyPolicy"),
+            handleStepCompletion: (step) => handleStepCompletion(step),
           });
-          handleStepCompletion("privacyPolicy");
         }}
       >
         <Text style={styles.boxText}>3. Política de Privacidad</Text>

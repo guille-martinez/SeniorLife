@@ -1,24 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function LoginScreen({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const isButtonDisabled = !email || !password; // Check if fields are empty
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      
+
       {/* Email Input */}
-      <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" />
-      
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+      />
+
       {/* Password Input */}
-      <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-      
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+
       {/* Login Button */}
-      <TouchableOpacity style={styles.button} onPress={() => alert("Logged In!")}>
+      <TouchableOpacity
+        style={[
+          styles.button,
+          isButtonDisabled ? styles.buttonDisabled : styles.buttonEnabled,
+        ]}
+        onPress={() => navigation.navigate("Principal")}
+        disabled={isButtonDisabled}
+      >
         <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>
-      
+
       {/* Navigate to Sign Up */}
-      <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Registro")}>
         <Text style={styles.link}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
     </View>
@@ -47,12 +71,17 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   button: {
-    backgroundColor: "#4CAF50",
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
     width: "80%",
     marginTop: 10,
+  },
+  buttonEnabled: {
+    backgroundColor: "#4CAF50", // Green when enabled
+  },
+  buttonDisabled: {
+    backgroundColor: "#ccc", // Gray when disabled
   },
   buttonText: {
     color: "#fff",

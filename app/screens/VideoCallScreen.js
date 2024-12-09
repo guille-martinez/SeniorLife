@@ -40,7 +40,7 @@ export default function VideoCallsScreen() {
           },
           {
             text: "Confirmar",
-            onPress: () => navigation.navigate("SimulacionLlamada", { contactName }),
+            onPress: () => navigation.navigate("Llamada", { contactName }),
           },
         ]
       );
