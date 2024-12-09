@@ -7,6 +7,8 @@ import SignupScreen from "./screens/SignupScreen";
 import PersonalDataScreen from "./screens/PersonalDataScreen"
 import MedicalRegisterScreen from "./screens/MedicalRegisterScreen"
 import PrivacyPolicyScreen from "./screens/PrivacyPolicyScreen"
+import DashboardScreen from "./screens/DashboardScreen"
+import VideoCallScreen from "./screens/VideoCallScreen"
 
 
 const Stack = createStackNavigator();
@@ -21,6 +23,8 @@ export default function Index() {
         <Stack.Screen name="Datos Personales" component={PersonalDataScreen} />
         <Stack.Screen name="Registro Médico" component={MedicalRegisterScreen} />
         <Stack.Screen name="Política de privacidad" component={PrivacyPolicyScreen} />
+        <Stack.Screen name='Principal' component={DashboardScreen} />
+        <Stack.Screen name='Video Llamada' component={VideoCallScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
