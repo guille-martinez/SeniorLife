@@ -7,9 +7,8 @@ export default function DashboardScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Saludo */}
+      {/* Título de la pantalla */}
       <View style={styles.header}>
-        <Text style={styles.greeting}>¡Hola, María!</Text>
         <Text style={styles.date}>{new Date().toLocaleDateString()}</Text>
       </View>
 
@@ -29,13 +28,13 @@ export default function DashboardScreen() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.optionButton}
-          onPress={() => navigation.navigate("SocialGroups")}
+          onPress={() => navigation.navigate("Grupos Sociales")}
         >
           <Text style={styles.optionText}>👥 Grupos Sociales</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.optionButton}
-          onPress={() => navigation.navigate("Reminders")}
+          onPress={() => navigation.navigate("Recordatorios")}
         >
           <Text style={styles.optionText}>⏰ Recordatorios</Text>
         </TouchableOpacity>
@@ -47,23 +46,26 @@ export default function DashboardScreen() {
         <Text style={styles.summaryText}>🏃 Pasos: 3,450</Text>
         <Text style={styles.summaryText}>❤️ Frecuencia Cardiaca: 72 bpm</Text>
         <Text style={styles.summaryText}>🩸 Nivel de Oxígeno: 98%</Text>
-        <TouchableOpacity
-          style={styles.detailsButton}
-          onPress={() => navigation.navigate("HealthDetails")}
-        >
-          <Text style={styles.detailsButtonText}>Ver Detalles</Text>
-        </TouchableOpacity>
       </View>
 
-      {/* Botón de Emergencia */}
-      <TouchableOpacity
-        style={styles.emergencyButton}
-        onPress={() =>
-          Alert.alert("Emergencia", "Llamando a los servicios de emergencia...")
-        }
-      >
-        <Text style={styles.emergencyText}>🚨 Emergencia</Text>
-      </TouchableOpacity>
+      {/* Botones de emergencia */}
+      <View style={styles.emergencyContainer}>
+        {/* Botón de Emergencia */}
+        {/* Botón de Contactos de Emergencia */}
+        <TouchableOpacity
+          style={styles.contactsButton}
+          onPress={() => navigation.navigate("Contactos de emergencia")}
+        >
+          <Text style={styles.contactsText}>📋 Contactos de Emergencia</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={styles.emergencyButton}
+          onPress={() => navigation.navigate("Emergencia")}
+        >
+          <Text style={styles.emergencyText}>🚨 EMERGENCIA</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -75,18 +77,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fdfaf6", // Fondo cálido
   },
   header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
     marginBottom: 20,
+    alignItems: "center",
   },
-  greeting: {
-    fontSize: 26,
+  title: {
+    fontSize: 28,
     fontWeight: "bold",
-    color: "#4CAF50",
+    color: "#333",
   },
   date: {
-    fontSize: 18,
+    fontSize: 16,
     color: "#666",
   },
   optionsContainer: {
@@ -96,11 +96,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   optionButton: {
-    width: "48%", // Adjust to fit 2 buttons per row with minimal spacing
+    width: "48%", // Ajustar para 2 botones por fila
     padding: 15,
     backgroundColor: "#e6f7ff",
     borderRadius: 10,
-    marginBottom: 5, // Reduce spacing between buttons
+    marginBottom: 10,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     marginBottom: 20,
+    marginTop: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -132,28 +133,39 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
-  detailsButton: {
-    backgroundColor: "#4CAF50",
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 5,
+  emergencyContainer: {
+    marginTop: 20,
     alignItems: "center",
-  },
-  detailsButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
   },
   emergencyButton: {
     backgroundColor: "#FF4C4C",
-    padding: 15,
+    paddingVertical: 25,
+    paddingHorizontal: 40,
     borderRadius: 15,
-    marginBottom: 35,
+    width: "90%",
     alignItems: "center",
   },
   emergencyText: {
     color: "#fff",
     fontSize: 18,
+    fontWeight: "bold",
+  },
+  contactsButton: {
+    backgroundColor: "#0066cc",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+    width: "80%",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+  },
+  contactsText: {
+    color: "#fff",
+    fontSize: 16,
     fontWeight: "bold",
   },
 });

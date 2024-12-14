@@ -1,77 +1,120 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Alert, TextInput } from "react-native";
 
 export default function MedicalRegisterScreen({ navigation, route }) {
   const { handleStepCompletion } = route.params;
 
-  // State for each input
-  const [bloodType, setBloodType] = useState("");
   const [heartRate, setHeartRate] = useState("");
   const [dailySteps, setDailySteps] = useState("");
   const [oxygenLevel, setOxygenLevel] = useState("");
+  const [bloodType, setBloodType] = useState("");
+  const [isConnected, setIsConnected] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const connectWearables = () => {
+    Alert.alert(
+      "Conectar Wearables",
+      "Se ha encontrado Wearables #1234. ¿Quieres continuar con este dispositivo?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Aceptar",
+          onPress: () => {
+            setLoading(true);
+            setTimeout(() => {
+              setHeartRate("72 bpm");
+              setDailySteps("3450 pasos");
+              setOxygenLevel("98%");
+              setBloodType("A+");
+              setIsConnected(true);
+              setLoading(false);
+              Alert.alert("¡Éxito!", "Wearables conectados correctamente.");
+            }, 5000);
+          },
+        },
+      ]
+    );
+  };
 
   const handleSave = () => {
-    // Form validation
-    if (!bloodType || !heartRate || !dailySteps || !oxygenLevel) {
-      Alert.alert("Error", "Por favor, complete todos los campos.");
-      return;
+    if (isConnected) {
+      handleStepCompletion("medicalRegistration");
+      navigation.goBack();
     }
-
-    // Additional validation (if needed)
-    const heartRateValid = !isNaN(heartRate) && heartRate > 0;
-    const stepsValid = !isNaN(dailySteps) && dailySteps > 0;
-    const oxygenValid = !isNaN(oxygenLevel) && oxygenLevel >= 0 && oxygenLevel <= 100;
-
-    if (!heartRateValid || !stepsValid || !oxygenValid) {
-      Alert.alert(
-        "Datos Inválidos",
-        "Por favor, introduzca valores válidos para los campos médicos."
-      );
-      return;
-    }
-
-    // If all validations pass
-    Alert.alert("¡Guardado!", "Los datos médicos se han guardado correctamente.");
-    handleStepCompletion("medicalRegistration");
-    navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Use los wearables para completar los siguientes campos:</Text>
-      
-      {/* Form Inputs */}
-      <TextInput
-        style={styles.input}
-        placeholder="Grupo Sanguíneo (A+, A-, etc.)"
-        value={bloodType}
-        onChangeText={setBloodType}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Frecuencia Cardiovascular (bpm)"
-        keyboardType="numeric"
-        value={heartRate}
-        onChangeText={setHeartRate}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Pasos Diarios"
-        keyboardType="numeric"
-        value={dailySteps}
-        onChangeText={setDailySteps}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Nivel de Oxígeno en Sangre (%)"
-        keyboardType="numeric"
-        value={oxygenLevel}
-        onChangeText={setOxygenLevel}
-      />
-      
-      {/* Submit Button */}
-      <TouchableOpacity style={styles.button} onPress={handleSave}>
-        <Text style={styles.buttonText}>Guardar</Text>
+      <TouchableOpacity
+        style={[
+          styles.connectButton,
+          isConnected ? styles.connectedButton : styles.notConnectedButton,
+        ]}
+        onPress={connectWearables}
+        disabled={loading || isConnected}
+      >
+        {loading ? (
+          <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          <Text style={styles.connectButtonText}>
+            {isConnected ? "Conectado" : "Conectar Wearables"}
+          </Text>
+        )}
+      </TouchableOpacity>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.inputLabel}>Frecuencia Cardiovascular</Text>
+        <TextInput
+          style={styles.input}
+          value={heartRate}
+          editable={false}
+          placeholder="bpm"
+        />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.inputLabel}>Pasos Diarios</Text>
+        <TextInput
+          style={styles.input}
+          value={dailySteps}
+          editable={false}
+          placeholder="pasos"
+        />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.inputLabel}>Nivel de Oxígeno en Sangre</Text>
+        <TextInput
+          style={styles.input}
+          value={oxygenLevel}
+          editable={false}
+          placeholder="%"
+        />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.inputLabel}>Grupo Sanguíneo</Text>
+        <TextInput
+          style={styles.input}
+          value={bloodType}
+          editable={false}
+          placeholder="Ej: A+"
+        />
+      </View>
+
+      <TouchableOpacity
+        style={[
+          styles.saveButton,
+          isConnected ? styles.saveEnabled : styles.saveDisabled,
+        ]}
+        onPress={handleSave}
+        disabled={!isConnected}
+      >
+        <Text style={styles.saveButtonText}>Guardar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -80,34 +123,62 @@ export default function MedicalRegisterScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     padding: 20,
     backgroundColor: "#f5f5f5",
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
   },
-  input: {
-    width: "100%",
-    padding: 10,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-  },
-  button: {
-    backgroundColor: "#4CAF50",
+  connectButton: {
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
-    marginTop: 20,
+    marginBottom: 20,
   },
-  buttonText: {
+  connectedButton: {
+    backgroundColor: "#ccc",
+  },
+  notConnectedButton: {
+    backgroundColor: "#007BFF",
+  },
+  connectButtonText: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  inputGroup: {
+    marginBottom: 15,
+  },
+  inputLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  input: {
+    width: "100%",
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    backgroundColor: "#f9f9f9",
+  },
+  saveButton: {
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  saveEnabled: {
+    backgroundColor: "#4CAF50",
+  },
+  saveDisabled: {
+    backgroundColor: "#ccc",
+  },
+  saveButtonText: {
+    color: "#fff",
+    fontSize: 16,
     fontWeight: "bold",
   },
 });
