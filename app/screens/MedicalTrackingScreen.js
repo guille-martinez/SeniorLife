@@ -1,39 +1,93 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function HealthMonitorScreen({ navigation }) {
-  // Example data for health metrics
-  const steps = 3450; // Current steps
-  const maxSteps = 10000; // Step goal
-  const heartRate = 72; // Heart rate in bpm
-  const oxygenLevel = 98; // Oxygen level in %
+export default function MedicalTrackingScreen({ navigation, route }) {
+  // Datos recibidos desde Registro Médico
+  const {
+    heartRate = 72, // Frecuencia cardiaca (bpm)
+    dailySteps = 3450, // Pasos diarios
+    oxygenLevel = 98, // Nivel de oxígeno en sangre (%)
+    sleepQuality = 8, // Calidad del sueño (1-10)
+    bloodPressure = "120/80", // Presión arterial
+  } = route.params || {};
+
+  const maxSteps = 10000; // Meta de pasos
 
   return (
     <View style={styles.container}>
-      {/* Steps Progress */}
-      <View style={styles.metricContainer}>
-        <Text style={styles.metricTitle}>Pasos: {steps} / {maxSteps}</Text>
-        <View style={styles.progressBarContainer}>
-          <View style={[styles.progressBarFill, { width: `${(steps / maxSteps) * 100}%` }]} />
+      {/* Pasos Diarios */}
+      <View style={styles.metricSection}>
+        <View style={styles.metricHeader}>
+          <Text style={styles.metricTitle}>Pasos Diarios</Text>
+          <TouchableOpacity
+            style={styles.hourlyButtonRight}
+            onPress={() => navigation.navigate("Pasos Diarios")}
+          >
+            <Text style={styles.hourlyButtonText}>Ver por horas &gt;</Text>
+          </TouchableOpacity>
         </View>
+        <View style={styles.progressBarContainer}>
+          <View
+            style={[styles.progressBarFill, { width: `${(dailySteps / maxSteps) * 100}%` }]}
+          />
+        </View>
+        <Text style={styles.metricValue}>{dailySteps} / {maxSteps} pasos</Text>
       </View>
 
-      {/* Heart Rate */}
-      <View style={styles.metricContainer}>
-        <Text style={styles.metricTitle}>Frecuencia Cardiaca</Text>
+      {/* Frecuencia Cardiaca */}
+      <View style={styles.metricSection}>
+        <View style={styles.metricHeader}>
+          <Text style={styles.metricTitle}>Frecuencia Cardiaca</Text>
+          <TouchableOpacity
+            style={styles.hourlyButtonRight}
+            onPress={() => navigation.navigate("Frecuencia Cardíaca")}
+          >
+            <Text style={styles.hourlyButtonText}>Ver por horas &gt;</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.barContainer}>
+          <View style={[styles.barFill, { width: `${heartRate}%` }]} />
+        </View>
         <Text style={styles.metricValue}>{heartRate} bpm</Text>
       </View>
 
-      {/* Oxygen Level */}
-      <View style={styles.metricContainer}>
-        <Text style={styles.metricTitle}>Nivel de Oxígeno</Text>
-        <Text style={styles.metricValue}>{oxygenLevel}%</Text>
-        <View style={styles.progressBarContainer}>
-          <View style={[styles.progressBarFill, { width: `${oxygenLevel}%` }]} />
+      {/* Nivel de Oxígeno */}
+      <View style={styles.metricSection}>
+        <View style={styles.metricHeader}>
+          <Text style={styles.metricTitle}>Nivel de Oxígeno</Text>
+          <TouchableOpacity
+            style={styles.hourlyButtonRight}
+            onPress={() => navigation.navigate("Nível de Oxígeno")}
+          >
+            <Text style={styles.hourlyButtonText}>Ver por horas &gt;</Text>
+          </TouchableOpacity>
         </View>
+        <View style={styles.barContainer}>
+          <View style={[styles.barFill, { width: `${oxygenLevel}%` }]} />
+        </View>
+        <Text style={styles.metricValue}>{oxygenLevel}%</Text>
       </View>
 
-      {/* Back Button */}
+      {/* Calidad del Sueño */}
+      <View style={styles.metricSection}>
+        <View style={styles.metricHeader}>
+          <Text style={styles.metricTitle}>Calidad del Sueño</Text>
+          <TouchableOpacity
+            style={styles.hourlyButtonRight}
+            onPress={() => navigation.navigate("Calidad de Sueño")}
+          >
+            <Text style={styles.hourlyButtonText}>Ver por horas &gt;</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.progressBarContainer}>
+          <View
+            style={[styles.progressBarFill, { width: `${(sleepQuality / 10) * 100}%` }]}
+          />
+        </View>
+        <Text style={styles.metricValue}>{sleepQuality} / 10</Text>
+      </View>
+
+      {/* Botón para volver */}
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>Volver al Dashboard</Text>
       </TouchableOpacity>
@@ -51,31 +105,49 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: "#4CAF50",
-    marginBottom: 20,
     textAlign: "center",
-  },
-  metricContainer: {
     marginBottom: 20,
+  },
+  metricSection: {
+    marginBottom: 30,
+  },
+  metricHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
   },
   metricTitle: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
-    marginBottom: 5,
   },
   metricValue: {
     fontSize: 16,
     color: "#666",
-    marginBottom: 10,
+    marginTop: 5,
+    textAlign: "center",
   },
   progressBarContainer: {
+    width: "100%",
+    height: 20,
+    backgroundColor: "#ccc",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  progressBarFill: {
+    height: "100%",
+    backgroundColor: "#4CAF50",
+    borderRadius: 10,
+  },
+  barContainer: {
     width: "100%",
     height: 10,
     backgroundColor: "#ccc",
     borderRadius: 5,
     overflow: "hidden",
   },
-  progressBarFill: {
+  barFill: {
     height: "100%",
     backgroundColor: "#4CAF50",
     borderRadius: 5,
@@ -90,6 +162,14 @@ const styles = StyleSheet.create({
   backButtonText: {
     color: "#fff",
     fontSize: 16,
+    fontWeight: "bold",
+  },
+  hourlyButtonRight: {
+    marginLeft: 10,
+  },
+  hourlyButtonText: {
+    color: "#007BFF",
+    fontSize: 14,
     fontWeight: "bold",
   },
 });

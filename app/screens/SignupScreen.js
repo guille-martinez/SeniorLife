@@ -19,7 +19,7 @@ export default function SignUpScreen({ navigation }) {
 
   const handleContinue = () => {
     if (allStepsCompleted) {
-      navigation.navigate("Principal"); // Replace with the actual next screen name
+      navigation.navigate("Principal "); // Replace with the actual next screen name
     } else {
       Alert.alert(
         "Pasos Incompletos",
@@ -30,6 +30,7 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Cree su cuenta en SeniorLife:</Text>
       {/* Personal Data */}
       <TouchableOpacity
         style={[
@@ -37,12 +38,12 @@ export default function SignUpScreen({ navigation }) {
           completedSteps.personalData ? styles.completedBox : null,
         ]}
         onPress={() => {
-          navigation.navigate("Datos Personales", {
+          navigation.navigate("Datos de Contacto", {
             handleStepCompletion: (step) => handleStepCompletion(step),
           });
         }}
       >
-        <Text style={styles.boxText}>1. Datos Personales</Text>
+        <Text style={styles.boxText}>1. Datos de Contacto</Text>
         <Text style={styles.boxDescription}>
           Rellene la información personal básica
         </Text>
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
     marginBottom: 30,
     textAlign: "center",
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#e6f7ff",
     padding: 28,
     borderRadius: 10,
-    marginBottom: 20,
+    marginBottom: 30,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
